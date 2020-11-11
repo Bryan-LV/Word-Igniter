@@ -10,7 +10,7 @@ function WordItem({ id, word, def, handleDelete }) {
   }
 
   return (
-    <div className="px-2 py-4 max-w-md mx-auto bg-white rounded-sm">
+    <div className="px-2 py-4 max-w-md mx-auto mt-2 bg-white rounded-sm">
       <h2 className="text-lg tracking-wide font-semibold">{titleCase(word)}</h2>
       <p className="text-gray-600 tracking-wide py-1">{def}</p>
       <div className="flex flex-row justify-end items-center">

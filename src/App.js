@@ -1,43 +1,39 @@
-import { Suspense, lazy, useState, useCallback } from 'react';
-const AddWord = lazy(() => import('./components/AddWord'));
-const WordList = lazy(() => import('./components/WordList'));
-
-// database
-const initList = [
-  {
-    word: 'congenial',
-    def: 'To like someone because their vibe is similar',
-    id: 1
-  },
-  {
-    def: 'asdf',
-    id: 2
-  }
-]
+import { lazy, Suspense } from 'react'
+import { Route, BrowserRouter } from 'react-router-dom';
+import ErrorBoundary from './components/ErrorBoundary';
+import Loader from './components/layout/Loader';
+import Navbar from './components/layout/Navbar';
+const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
+const Quizzes = lazy(() => import('./components/quizzes/Quizzes'));
+const Login = lazy(() => import('./components/login/Login'));
+const Register = lazy(() => import('./components/login/Register'));
 
 function App() {
-  const [wordList, setWordList] = useState(initList);
-
-  const deleteWord = (id) => {
-    setWordList(prevState => {
-      const updatedList = prevState.filter(word => word.id !== id);
-      return updatedList;
-    })
-  }
-
-  const handleDelete = useCallback((id) => {
-    deleteWord(id)
-  }, [])
-
   return (
-    <div className="">
-      <h1 className="text-2xl tracking-wide font-semibold py-2 px-6 text-center md:text-left ">Vocab Reminder</h1>
-      <Suspense fallback={<h1>Loading</h1>}>
-        <AddWord addWord={setWordList} />
-      </Suspense>
-      <Suspense fallback={<h1>Loading</h1>}>
-        <WordList list={wordList} handleDelete={handleDelete} />
-      </Suspense>
+    <div className="text-gray-800">
+      <BrowserRouter>
+        <Navbar />
+        <ErrorBoundary>
+          <Suspense fallback={<Loader />}>
+            <Route path="/login" exact>
+              <Login />
+            </Route>
+
+            <Route path="/register" exact>
+              <Register />
+            </Route>
+
+            <Route path="/" exact>
+              <Dashboard isAuth={true} />
+            </Route>
+
+            <Route path="/quizzes" exact>
+              <Quizzes isAuth={true} />
+            </Route>
+
+          </Suspense>
+        </ErrorBoundary>
+      </BrowserRouter>
     </div>
   );
 }
