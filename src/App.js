@@ -1,36 +1,46 @@
-import { lazy, Suspense } from 'react'
-import { Route, BrowserRouter } from 'react-router-dom';
-import ErrorBoundary from './components/ErrorBoundary';
+import { lazy, Suspense, useContext } from 'react'
+import { BrowserRouter, Switch } from 'react-router-dom';
+import ErrorBoundary from './components/layout/ErrorBoundary';
 import Loader from './components/layout/Loader';
 import Navbar from './components/layout/Navbar';
+import AuthContext from './context/auth/AuthContextProvider';
+import PrivateRoute from './hoc/PrivateRoute';
+import PublicRoute from './hoc/PublicRoute';
 const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
 const Quizzes = lazy(() => import('./components/quizzes/Quizzes'));
 const Login = lazy(() => import('./components/login/Login'));
 const Register = lazy(() => import('./components/login/Register'));
 
 function App() {
+  const { AuthState } = useContext(AuthContext);
   return (
     <div className="text-gray-800">
       <BrowserRouter>
         <Navbar />
         <ErrorBoundary>
           <Suspense fallback={<Loader />}>
-            <Route path="/login" exact>
-              <Login />
-            </Route>
+            <Switch>
+              <PublicRoute path="/login" user={AuthState.user} exact>
+                <Login />
+              </PublicRoute>
 
-            <Route path="/register" exact>
-              <Register />
-            </Route>
+              <PublicRoute path="/register" user={AuthState.user} exact>
+                <Register />
+              </PublicRoute>
 
-            <Route path="/" exact>
-              <Dashboard isAuth={true} />
-            </Route>
+              <PrivateRoute path="/" exact>
+                <Dashboard />
+              </PrivateRoute>
 
-            <Route path="/quizzes" exact>
-              <Quizzes isAuth={true} />
-            </Route>
+              <PrivateRoute path="/quizzes" exact>
+                <Quizzes />
+              </PrivateRoute>
 
+              <PublicRoute user={AuthState.user} path="/*" >
+                <Login />
+              </PublicRoute>
+
+            </Switch>
           </Suspense>
         </ErrorBoundary>
       </BrowserRouter>
