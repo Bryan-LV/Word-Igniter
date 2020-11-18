@@ -39,12 +39,17 @@ function Login() {
       return;
     }
 
-    // Sign in user
-    const login = await auth.signInWithEmailAndPassword(userCred.email, userCred.password);
-    // Add user to context
-    AuthActions.login(login.user.email);
-    // Send user to Dashboard
-    history.push('/');
+    try {
+      // Sign in user
+      const login = await auth.signInWithEmailAndPassword(userCred.email, userCred.password);
+      // Add user to context
+      AuthActions.login({ email: login.user.email, displayName: login.user.displayName });
+      // Send user to Dashboard
+      history.push('/');
+    } catch (error) {
+      setError('Uh oh, looks like your credentials were wrong, please try again');
+      setTimeout(clearError, 3000);
+    }
   }
 
 

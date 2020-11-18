@@ -1,4 +1,4 @@
-import { useState, useCallback } from 'react';
+import { useState, useCallback, useContext } from 'react';
 import WordSearchModal from './WordSearchModal';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { firestore } from '../../firebase';
@@ -6,6 +6,7 @@ import { auth } from '../../firebase';
 
 import AddWord from './AddWord'
 import WordList from './WordList'
+import AuthContext from '../../context/auth/AuthContextProvider';
 
 // database
 const initList = [
@@ -39,7 +40,7 @@ function Dashboard() {
   const [wordList, setWordList] = useState(initList);
   const [toggle, setToggle] = useState(false);
   const [vocab, loading, error] = useCollectionData(firestore.collection('vocabulary'), { idField: 'id' })
-  console.log(vocab);
+  const { AuthActions } = useContext(AuthContext);
 
   const handleEdit = (id) => {
     const updatedList = wordList.map(word => {
@@ -66,7 +67,7 @@ function Dashboard() {
       {toggle && <WordSearchModal words={wordList} setToggle={setToggle} handleDelete={handleDelete} handleEdit={handleEdit} />}
       <AddWord addWord={setWordList} />
       <WordList list={wordList} handleDelete={handleDelete} setToggle={setToggle} handleEdit={handleEdit} />
-      <button onClick={() => auth.signOut()}>Logout</button>
+      <button onClick={() => AuthActions.logout()}>Logout</button>
     </div>
   )
 }

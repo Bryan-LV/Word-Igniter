@@ -16,27 +16,27 @@ function App() {
   return (
     <div className="text-gray-800">
       <BrowserRouter>
-        <Navbar />
+        <Navbar isAuth={AuthState.user} />
         <ErrorBoundary>
           <Suspense fallback={<Loader />}>
             <Switch>
-              <PublicRoute path="/login" user={AuthState.user} exact>
+              <PublicRoute path="/login" isAuth={AuthState.user} exact>
                 <Login />
               </PublicRoute>
 
-              <PublicRoute path="/register" user={AuthState.user} exact>
+              <PublicRoute path="/register" isAuth={AuthState.user} exact>
                 <Register />
               </PublicRoute>
 
-              <PrivateRoute path="/" exact>
+              <PrivateRoute path="/" isAuth={AuthState.user} exact>
                 <Dashboard />
               </PrivateRoute>
 
-              <PrivateRoute path="/quizzes" exact>
+              <PrivateRoute path="/quizzes" isAuth={AuthState.user} exact>
                 <Quizzes />
               </PrivateRoute>
 
-              <PublicRoute user={AuthState.user} path="/*" >
+              <PublicRoute isAuth={AuthState.user} path="/*" >
                 <Login />
               </PublicRoute>
 

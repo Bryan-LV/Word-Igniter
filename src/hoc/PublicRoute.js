@@ -1,13 +1,13 @@
 import { Redirect, Route } from 'react-router-dom'
 
 // Take children and rest of props from wrapper component
-function PublicRoute({ children, user, ...rest }) {
+function PublicRoute({ children, isAuth, ...rest }) {
 
   // if user is logged in don't show login or register pages
-  if (user && rest.path === '/login') {
+  if (isAuth && rest.path === '/login') {
     return <Redirect {...rest} to="/" />
   }
-  if (user && rest.path === '/register') {
+  if (isAuth && rest.path === '/register') {
     return <Redirect {...rest} to="/" />
   }
 

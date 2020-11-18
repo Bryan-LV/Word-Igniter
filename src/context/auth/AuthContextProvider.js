@@ -15,6 +15,7 @@ function AuthProvider({ children }) {
       return AuthDispatch({ type: AuthTypes.SIGN_IN, payload: user });
     },
     logout() {
+      auth.signOut();
       return AuthDispatch(({ type: AuthTypes.SIGN_OUT }));
     }
   }
