@@ -1,7 +1,7 @@
-import React from 'react'
 import { Link } from 'react-router-dom'
 
-function Navbar({ isAuth }) {
+function Navbar({ isAuth, logout }) {
+
   return (
     <header className="flex flex-row items-center justify-between py-6 mx-2">
       <div className="flex flex-row items-center justify-center">
@@ -14,7 +14,7 @@ function Navbar({ isAuth }) {
         <nav className="hidden md:flex flex-row items-center justify-around pr-2">
           <Link to="/" className="px-2 cursor-pointer block">Home</Link>
           <Link to="/quizzes" className="px-2 cursor-pointer block">Quizzes</Link>
-          <div className="cursor-pointer pl-4"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg></div>
+          <div onClick={() => logout()} className="cursor-pointer pl-4"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg></div>
         </nav>  </>
         :
         <div className=""></div>

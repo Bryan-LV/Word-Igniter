@@ -61,13 +61,13 @@ function Login() {
       </div>
 
       <form onSubmit={handleSubmit} className="bg-white py-5 rounded-md max-w-sm mx-auto shadow-md">
-        {errors.length > 0 && errors.map((err, i) => <p key={i} className="text-sm text-red-500 px-3 my-2">{err}</p>)}
+        {errors?.length > 0 && errors.map((err, i) => <p key={i} className="text-sm text-red-500 px-3 my-2">{err}</p>)}
         <div className="mx-4">
 
           <input
             type="text"
             id="email"
-            placeholder="email"
+            placeholder="Email"
             aria-placeholder="email"
             value={userCred.email}
             onChange={handleTextChange}

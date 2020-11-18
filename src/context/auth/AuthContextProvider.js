@@ -24,7 +24,7 @@ function AuthProvider({ children }) {
     // check if user is signed in
     const unsubcribe = auth.onAuthStateChanged(user => {
       if (user) {
-        AuthActions.login({ email: user.user.email, displayName: user.user.displayName, id: user.user.uid });
+        AuthActions.login({ email: user.email, displayName: user.displayName, id: user.uid });
       }
     })
     return unsubcribe

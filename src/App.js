@@ -12,11 +12,12 @@ const Login = lazy(() => import('./components/login/Login'));
 const Register = lazy(() => import('./components/login/Register'));
 
 function App() {
-  const { AuthState } = useContext(AuthContext);
+  const { AuthState, AuthActions } = useContext(AuthContext);
+
   return (
     <div className="text-gray-800">
       <BrowserRouter>
-        <Navbar isAuth={AuthState.user} />
+        <Navbar isAuth={AuthState.user} logout={AuthActions.logout} />
         <ErrorBoundary>
           <Suspense fallback={<Loader />}>
             <Switch>
