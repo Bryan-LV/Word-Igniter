@@ -1,19 +1,27 @@
-import React, { useState } from 'react';
-import { v4 as uuid } from 'uuid';
+import React, { useContext, useState } from 'react';
+import AuthContext from '../../context/auth/AuthContextProvider';
+import { firestore } from '../../firebase';
 
 function AddWord({ addWord }) {
-  const [word, setWord] = useState({ word: '', def: '', id: uuid() });
+  const { AuthState } = useContext(AuthContext);
+  const [word, setWord] = useState({ word: '', def: '', userID: AuthState.user.id });
 
   const handleTextInput = (evt) => {
     setWord(prevState => ({ ...prevState, [evt.target.id]: evt.target.value }))
   }
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (word.word !== '' && word.def !== '') {
       // push word to app
       addWord(prevState => [...prevState, word])
-      setWord({ word: '', def: '', id: uuid() });
+      // add word to firestore
+      try {
+        await firestore.collection('vocabulary').add(word);
+      } catch (error) {
+        console.log(error);
+      }
+      setWord(ps => ({ ...ps, word: '', def: '' }));
     }
   }
 
