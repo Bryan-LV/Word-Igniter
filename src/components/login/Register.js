@@ -47,7 +47,7 @@ function Register() {
         displayName: userCred.username
       })
       // Add user to context
-      AuthActions.login({ email: register.user.email, displayName: register.user.displayName });
+      AuthActions.login({ email: register.user.email, displayName: register.user.displayName, id: register.user.uid });
       // Send user to Dashboard
       history.push('/');
     } catch (error) {

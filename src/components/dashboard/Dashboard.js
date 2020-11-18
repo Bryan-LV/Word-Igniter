@@ -2,7 +2,6 @@ import { useState, useCallback, useContext } from 'react';
 import WordSearchModal from './WordSearchModal';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
 import { firestore } from '../../firebase';
-import { auth } from '../../firebase';
 
 import AddWord from './AddWord'
 import WordList from './WordList'
@@ -39,8 +38,8 @@ const initList = [
 function Dashboard() {
   const [wordList, setWordList] = useState(initList);
   const [toggle, setToggle] = useState(false);
-  const [vocab, loading, error] = useCollectionData(firestore.collection('vocabulary'), { idField: 'id' })
   const { AuthActions } = useContext(AuthContext);
+  const [vocab, loading, error] = useCollectionData(firestore.collection('vocabulary'), { idField: 'id' })
 
   const handleEdit = (id) => {
     const updatedList = wordList.map(word => {

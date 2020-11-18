@@ -43,7 +43,7 @@ function Login() {
       // Sign in user
       const login = await auth.signInWithEmailAndPassword(userCred.email, userCred.password);
       // Add user to context
-      AuthActions.login({ email: login.user.email, displayName: login.user.displayName });
+      AuthActions.login({ email: login.user.email, displayName: login.user.displayName, id: login.user.uid });
       // Send user to Dashboard
       history.push('/');
     } catch (error) {
