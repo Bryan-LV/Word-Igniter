@@ -11,7 +11,7 @@ function PublicRoute({ children, isAuth, ...rest }) {
     return <Redirect {...rest} to="/" />
   }
 
-  return <Route {...rest} render={() => children} />
+  return <Route {...rest} path={rest.path} render={() => children} />
 }
 
 export default PublicRoute

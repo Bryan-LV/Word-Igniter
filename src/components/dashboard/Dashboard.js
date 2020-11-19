@@ -1,71 +1,43 @@
-import { useState, useCallback, useContext } from 'react';
-import WordSearchModal from './WordSearchModal';
+import { useState, useContext } from 'react';
 import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { auth, firestore } from '../../firebase';
-
+import { firestore } from '../../firebase';
 import AddWord from './AddWord'
 import WordList from './WordList'
 import AuthContext from '../../context/auth/AuthContextProvider';
-
-// database
-const initList = [
-  {
-    word: 'congenial',
-    def: 'To like someone because their vibe is similar',
-    id: 1,
-    editWord: false
-  },
-  {
-    word: 'ambivalent',
-    def: 'having mixed feelings or contradictory ideas about something or someone.',
-    id: 2,
-    editWord: false
-  },
-  {
-    word: 'disparate',
-    def: 'things being to different to compare',
-    id: 3,
-    editWord: false
-  },
-  {
-    word: 'salient',
-    def: 'most noticeable or important',
-    id: 4,
-    editWord: false
-  }
-]
+import WordSearch from './WordSearch';
+import Modal from '../../hoc/Modal';
+import useAuth from '../../hooks/useAuth'
 
 function Dashboard() {
-  const [wordList, setWordList] = useState(initList);
-  const [toggle, setToggle] = useState(false);
-  const { AuthState, AuthActions } = useContext(AuthContext);
-  const [vocab, loading, error] = useCollectionData(firestore.collection('vocabulary').where('userID', '==', AuthState.user.id), { idField: 'id' })
+  // Re-routes if user is not logged in.
+  useAuth()
+  const { AuthState } = useContext(AuthContext);
+  const [vocab] = useCollectionData(firestore.collection('vocabulary').where('userID', '==', AuthState.user.id), { idField: 'id' })
+  const [confirmDelete, setConfirmDelete] = useState(false);
 
-  const handleEdit = (id) => {
-    const updatedList = wordList.map(word => {
-      if (word.id === id) {
-        word.editWord = word.editWord === true ? false : true;
-      }
-      return word
-    })
-    setWordList(updatedList)
-  }
+  // Modal States
+  const [deleteWordModal, setDeleteWordModal] = useState(false);
+  const [wordSearchModal, setWordSearchModal] = useState(false);
 
-  const handleDelete = useCallback((id) => {
-    function deleteWord(id) {
-      setWordList(prevState => {
-        const updatedList = prevState.filter(word => word.id !== id);
-        return updatedList;
-      })
-    }
-    deleteWord(id)
-  }, [])
 
   return (
     <div className="">
-      {toggle && <WordSearchModal words={wordList} setToggle={setToggle} handleDelete={handleDelete} handleEdit={handleEdit} />}
+      <Modal modalState={wordSearchModal} setModalState={setWordSearchModal} fallback={null} id="WordSearch" >
+        <WordSearch words={vocab} />
+      </Modal>
+
+      <Modal modalState={deleteWordModal} setModalState={setDeleteWordModal} fallback={null} id="DeleteConfirm">
+        <div className="">
+          <h3 className="">Are you sure you want to delete word?</h3>
+          <div className="">
+            <p className="px-8 py-2 bg-red-700 text-white font-semibold tracking-wide">No</p>
+            <p className="px-8 py-2 bg-green-700 text-white font-semibold tracking-wide">Yes</p>
+          </div>
+        </div>
+      </Modal>
+
       <AddWord />
-      <WordList list={vocab} setToggle={setToggle} />
+      <WordList list={vocab} setWordSearchModal={setWordSearchModal} />
     </div>
   )
 }

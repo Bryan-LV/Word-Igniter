@@ -1,5 +1,6 @@
-import { memo } from 'react'
-import { firestore } from '../../firebase'
+import React from 'react';
+import { firestore } from '../../firebase';
+
 function WordItem({ id, word, def }) {
 
   const titleCase = (word) => {
@@ -11,7 +12,8 @@ function WordItem({ id, word, def }) {
   }
 
   const deleteWord = () => {
-    firestore.collection('vocabulary').doc(id).delete()
+    // TODO: Get a confirmation to proceed with deleting word
+    // firestore.collection('vocabulary').doc(id).delete()
   }
 
   return (
@@ -30,4 +32,4 @@ function WordItem({ id, word, def }) {
   )
 }
 
-export default memo(WordItem)
+export default React.memo(WordItem)

@@ -1,7 +1,10 @@
 import { useState } from 'react'
 import { motion } from 'framer-motion';
+import useAuth from '../../hooks/useAuth';
 
 function Quizzes() {
+  // Re-routes if user is not logged in.
+  useAuth();
   return (
     <div>
 

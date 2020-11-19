@@ -1,10 +1,10 @@
 import { lazy, Suspense, useContext } from 'react'
-import { BrowserRouter, Switch } from 'react-router-dom';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
 import ErrorBoundary from './components/layout/ErrorBoundary';
 import Loader from './components/layout/Loader';
 import Navbar from './components/layout/Navbar';
+import Redirector from './components/layout/Redirector';
 import AuthContext from './context/auth/AuthContextProvider';
-import PrivateRoute from './hoc/PrivateRoute';
 import PublicRoute from './hoc/PublicRoute';
 const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
 const Quizzes = lazy(() => import('./components/quizzes/Quizzes'));
@@ -21,6 +21,7 @@ function App() {
         <ErrorBoundary>
           <Suspense fallback={<Loader />}>
             <Switch>
+
               <PublicRoute path="/login" isAuth={AuthState.user} exact>
                 <Login />
               </PublicRoute>
@@ -29,17 +30,13 @@ function App() {
                 <Register />
               </PublicRoute>
 
-              <PrivateRoute path="/" isAuth={AuthState.user} exact>
-                <Dashboard />
-              </PrivateRoute>
+              <Route path="/" exact render={(props) => {
+                return AuthState.user ? <Dashboard {...props} /> : <Redirector path="/login" isAuth={AuthState.user} />;
+              }} />
 
-              <PrivateRoute path="/quizzes" isAuth={AuthState.user} exact>
-                <Quizzes />
-              </PrivateRoute>
-
-              <PublicRoute isAuth={AuthState.user} path="/*" >
-                <Login />
-              </PublicRoute>
+              <Route path="/quizzes" exact render={props => {
+                return AuthState.user ? <Quizzes {...props} /> : <Redirector path="/login" isAuth={AuthState.user} />;
+              }} />
 
             </Switch>
           </Suspense>

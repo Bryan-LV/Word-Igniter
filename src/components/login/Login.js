@@ -1,4 +1,5 @@
 import React, { useState, useContext } from 'react'
+import { motion } from 'framer-motion';
 import { Link, useHistory } from 'react-router-dom';
 import AuthContext from '../../context/auth/AuthContextProvider';
 import { auth } from '../../firebase'
@@ -55,42 +56,52 @@ function Login() {
 
   return (
     <div className="px-4">
-      <div className="py-4 text-center">
+      <motion.div
+        initial={{ x: '-100vw' }}
+        animate={{ x: 0 }}
+        transition={{ delay: 0.5, type: "spring", bounce: 0.15 }}
+        className="py-4 text-center">
         <h2 className="text-4xl font-semibold tracking-wide text-gray-800">Expand your vocabulary</h2>
         <p className="text-sm text-gray-700 tracking-wide max-w-sm mx-auto">Create your own word list to study. Make your own quizzes, and get notifications of new words frequently so you never forget again.</p>
-      </div>
+      </motion.div>
 
-      <form onSubmit={handleSubmit} className="bg-white py-5 rounded-md max-w-sm mx-auto shadow-md">
-        {errors?.length > 0 && errors.map((err, i) => <p key={i} className="text-sm text-red-500 px-3 my-2">{err}</p>)}
-        <div className="mx-4">
+      <motion.div
+        initial={{ x: '100vw' }}
+        animate={{ x: 0 }}
+        transition={{ delay: 0.5, type: "spring", bounce: 0.15 }}
+        className="">
+        <form onSubmit={handleSubmit} className="bg-white py-5 rounded-md max-w-sm mx-auto shadow-md">
+          {errors?.length > 0 && errors.map((err, i) => <p key={i} className="text-sm text-red-500 px-3 my-2">{err}</p>)}
+          <div className="mx-4">
 
-          <input
-            type="text"
-            id="email"
-            placeholder="Email"
-            aria-placeholder="email"
-            value={userCred.email}
-            onChange={handleTextChange}
-            className=" border rounded-sm px-3 py-2 text-gray-800 w-full" />
-          <div className="flex flex-row justify-center items-center">
             <input
-              type={passwordType}
-              id="password"
-              placeholder="Password"
-              aria-placeholder="password"
-              value={userCred.password}
+              type="text"
+              id="email"
+              placeholder="Email"
+              aria-placeholder="email"
+              value={userCred.email}
               onChange={handleTextChange}
-              className=" border rounded-sm px-3 py-2 my-4 text-gray-800 w-full" />
-            <div className="pl-3" onClick={handlePasswordType}>{switchEyeIcon()}</div>
+              className=" border rounded-sm px-3 py-2 text-gray-800 w-full" />
+            <div className="flex flex-row justify-center items-center">
+              <input
+                type={passwordType}
+                id="password"
+                placeholder="Password"
+                aria-placeholder="password"
+                value={userCred.password}
+                onChange={handleTextChange}
+                className=" border rounded-sm px-3 py-2 my-4 text-gray-800 w-full" />
+              <div className="pl-3" onClick={handlePasswordType}>{switchEyeIcon()}</div>
+            </div>
+            <button className="bg-gray-800 text-white tracking-wide py-2 max-w-sm w-full mx-auto rounded-md cursor-pointer font-semibold">Login</button>
+            <p className="py-3 text-center text-sm tracking-wide text-gray-700 font-semibold">Forgotten password?</p>
+            <div className="w-full border border-gray-300"></div>
+            <div className="text-center">
+              <Link to="/register" className=" bg-green-500 block mx-auto text-white tracking-wide py-2 max-w-sm w-1/2 mt-6 rounded-md cursor-pointer font-semibold">Create New Account</Link>
+            </div>
           </div>
-          <button className="bg-gray-800 text-white tracking-wide py-2 max-w-sm w-full mx-auto rounded-md cursor-pointer font-semibold">Login</button>
-          <p className="py-3 text-center text-sm tracking-wide text-gray-700 font-semibold">Forgotten password?</p>
-          <div className="w-full border border-gray-300"></div>
-          <div className="text-center">
-            <Link to="/register" className=" bg-green-500 block mx-auto text-white tracking-wide py-2 max-w-sm w-1/2 mt-6 rounded-md cursor-pointer font-semibold">Create New Account</Link>
-          </div>
-        </div>
-      </form>
+        </form>
+      </motion.div>
     </div>
   )
 }
