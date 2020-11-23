@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
 import { firestore } from '../../firebase';
 
 function WordItem({ id, word, def, setDeleteWordModal, setDeleteWordID }) {
@@ -49,7 +49,7 @@ function WordItem({ id, word, def, setDeleteWordModal, setDeleteWordID }) {
   }
 
   return (
-    <div className="px-2 py-4 max-w-md mx-auto mt-2 bg-white rounded-sm">
+    <div className="px-2 py-4 max-w-md mx-auto mt-2 bg-white rounded-sm w-full">
       {/* If editing word show input, else show h2 */}
       {editWord ?
         <input type="text"
