@@ -3,7 +3,7 @@ import WordItem from './WordItem';
 import { motion } from 'framer-motion';
 import ErrorBoundary from '../layout/ErrorBoundary';
 
-function WordList({ list, setWordSearchModal }) {
+function WordList({ list, setWordSearchModal, setDeleteWordModal, setDeleteWordID }) {
 
   // Opens modal to search for a word
   const searchWord = () => {
@@ -19,7 +19,7 @@ function WordList({ list, setWordSearchModal }) {
       {list?.length > 0 && list.map(word => {
         return (
           <ErrorBoundary prompt="Uh oh, looks like we couldn't retrieve this word..." key={word.id}>
-            <WordItem word={word.word} def={word.def} id={word.id} />
+            <WordItem word={word.word} def={word.def} id={word.id} setDeleteWordModal={setDeleteWordModal} setDeleteWordID={setDeleteWordID} />
           </ErrorBoundary>
         )
       })}

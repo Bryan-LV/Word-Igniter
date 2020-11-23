@@ -1,7 +1,6 @@
 import React from 'react';
-import { firestore } from '../../firebase';
 
-function WordItem({ id, word, def }) {
+function WordItem({ id, word, def, setDeleteWordModal, setDeleteWordID }) {
 
   const titleCase = (word) => {
     let restOfWord = word.slice(1);
@@ -12,8 +11,11 @@ function WordItem({ id, word, def }) {
   }
 
   const deleteWord = () => {
-    // TODO: Get a confirmation to proceed with deleting word
-    // firestore.collection('vocabulary').doc(id).delete()
+    // Open confirmation modal
+    setDeleteWordModal(true);
+    // Send ID to callback
+    setDeleteWordID(id)
+
   }
 
   return (

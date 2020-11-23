@@ -1,5 +1,5 @@
 import React from 'react';
-function Modal({ children, fallback, modalState, setModalState, id }) {
+function Modal({ children, fallback, modalState, setModalState }) {
 
   if (!modalState) {
     // if modal is hidden, show fallback
