@@ -49,7 +49,7 @@ function WordItem({ id, word, def, setDeleteWordModal, setDeleteWordID }) {
   }
 
   return (
-    <div className="px-2 py-4 max-w-md mx-auto mt-2 bg-white rounded-sm w-full">
+    <div className="px-2 py-4 max-w-md mx-auto mt-3 bg-white rounded-sm w-full">
       {/* If editing word show input, else show h2 */}
       {editWord ?
         <input type="text"
@@ -62,11 +62,11 @@ function WordItem({ id, word, def, setDeleteWordModal, setDeleteWordID }) {
 
       {/* If editing word show textarea, else show paragraph tag */}
       {editWord ?
-        <input type="text"
+        <textarea type="text"
           id="def"
           value={wordForm.def}
           onChange={handleFormChange}
-          className="w-full rounded-md mb-3 p-2 border" />
+          className="w-full rounded-md mb-3 p-2 border" ></textarea>
         :
         <p className="text-gray-600 tracking-wide py-1">{def}</p>}
 
