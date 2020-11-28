@@ -2,14 +2,20 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import { AuthProvider } from './context/auth/AuthContextProvider';
+import { QuizContextProvider } from './context/quizzes/QuizContext';
+import { VocabContextProvider } from './context/vocab/VocabContext';
 import reportWebVitals from './reportWebVitals';
 import './styles/tailwind-output.css'
 
 ReactDOM.render(
   <AuthProvider>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <VocabContextProvider>
+      <QuizContextProvider>
+        <React.StrictMode>
+          <App />
+        </React.StrictMode>
+      </QuizContextProvider>
+    </VocabContextProvider>
   </AuthProvider>
   ,
   document.getElementById('root')

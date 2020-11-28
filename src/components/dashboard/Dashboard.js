@@ -1,19 +1,18 @@
 import { useState, useContext } from 'react';
-import { useCollectionData } from 'react-firebase-hooks/firestore';
-import { firestore } from '../../firebase';
 import AddWord from './AddWord'
 import WordList from './WordList'
-import AuthContext from '../../context/auth/AuthContextProvider';
 import WordSearch from './WordSearch';
 import Modal from '../../hoc/Modal';
 import useAuth from '../../hooks/useAuth'
 import DeleteWord from '../units/DeleteWord';
+import VocabContext from '../../context/vocab/VocabContext';
+import WordItem from './WordItem';
 
 function Dashboard() {
   // Re-routes if user is not logged in.
   useAuth()
-  const { AuthState } = useContext(AuthContext);
-  const [vocab] = useCollectionData(firestore.collection('vocabulary').where('userID', '==', AuthState.user.id), { idField: 'id' })
+  const { VocabState } = useContext(VocabContext);
+  const vocab = VocabState.words;
 
   // Modal States
   const [deleteWordModal, setDeleteWordModal] = useState(false);
@@ -23,7 +22,9 @@ function Dashboard() {
   return (
     <div className="">
       <Modal modalState={wordSearchModal} setModalState={setWordSearchModal} fallback={null} id="WordSearch" >
-        <WordSearch words={vocab} setModalState={setWordSearchModal} />
+        <WordSearch words={vocab} setModalState={setWordSearchModal} render={word => (
+          <WordItem word={word.word} def={word.def} id={word.id} key={word.id} />
+        )} />
       </Modal>
 
       <Modal modalState={deleteWordModal} setModalState={setDeleteWordModal} fallback={null} id="DeleteConfirm">

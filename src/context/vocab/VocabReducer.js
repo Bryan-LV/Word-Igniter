@@ -1,14 +1,10 @@
 import VocabTypes from './VocabTypes';
-import { VocabState } from './VocabState';
+import VocabState from './VocabState';
 
 const VocabReducer = function (state = VocabState, action) {
   switch (action.type) {
-    case VocabTypes.ADD_WORD:
-      return;
-    case VocabTypes.DELETE_WORD:
-      return;
-    case VocabTypes.EDIT_WORD:
-      return;
+    case VocabTypes.SET_WORDS:
+      return ({ words: action.payload });
     default:
       return state;
   }

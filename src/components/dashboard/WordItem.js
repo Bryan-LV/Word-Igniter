@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { firestore } from '../../firebase';
+import titleCase from '../utils/titleCase';
 
 function WordItem({ id, word, def, setDeleteWordModal, setDeleteWordID }) {
   const [editWord, setEditWord] = useState(false);
@@ -7,14 +8,6 @@ function WordItem({ id, word, def, setDeleteWordModal, setDeleteWordID }) {
 
   function handleFormChange(e) {
     setWordForm(prevState => ({ ...prevState, [e.target.id]: e.target.value }));
-  }
-
-  function titleCase(word) {
-    let restOfWord = word.slice(1);
-    let firstLetter = word.substr(0, 1);
-    firstLetter = firstLetter.toUpperCase();
-    let merge = firstLetter + restOfWord;
-    return merge;
   }
 
   function deleteWord() {
@@ -49,7 +42,7 @@ function WordItem({ id, word, def, setDeleteWordModal, setDeleteWordID }) {
   }
 
   return (
-    <div className="px-2 py-4 max-w-md mx-auto mt-3 bg-white rounded-sm w-full">
+    <div className="p-4 max-w-md mx-auto mt-3 bg-white rounded-md w-full shadow-md">
       {/* If editing word show input, else show h2 */}
       {editWord ?
         <input type="text"

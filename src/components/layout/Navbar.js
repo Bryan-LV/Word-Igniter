@@ -23,9 +23,12 @@ function Navbar({ isAuth, logout }) {
                 <svg className="w-10 h-10" fill="none" stroke="#fff" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" /></svg>
               </div>
               <div className="flex flex-col justify-center items-center text-white">
-                <Link to="/" className="px-2 cursor-pointer block">Home</Link>
-                <Link to="/quizzes" className="px-2 cursor-pointer block">Quizzes</Link>
-                <div onClick={() => logout()} className="cursor-pointer pl-4"><svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg></div>
+                <Link to="/" className="px-2 cursor-pointer block text-3xl font-semibold">Home</Link>
+                <Link to="/quizzes" className="px-2 cursor-pointer block text-3xl font-semibold my-4">Quizzes</Link>
+                <div onClick={() => logout()} className="cursor-pointer pl-4 fixed bottom-0 mb-10 flex flex-row items-center justify-center">
+                  <p className="text-2xl pr-2">Signout</p>
+                  <svg className="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>
+                </div>
               </div>
             </div>
             :

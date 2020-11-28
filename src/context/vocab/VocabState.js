@@ -1,4 +1,4 @@
 const VocabState = {
   words: []
 }
-export { VocabState }
+export default VocabState;

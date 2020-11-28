@@ -10,6 +10,9 @@ const Dashboard = lazy(() => import('./components/dashboard/Dashboard'));
 const Quizzes = lazy(() => import('./components/quizzes/Quizzes'));
 const Login = lazy(() => import('./components/login/Login'));
 const Register = lazy(() => import('./components/login/Register'));
+const Quiz = lazy(() => import('./components/quizzes/Quiz'));
+const QuizMaker = lazy(() => import('./components/quizzes/QuizMaker'));
+
 
 function App() {
   const { AuthState, AuthActions } = useContext(AuthContext);
@@ -22,11 +25,11 @@ function App() {
           <Suspense fallback={<Loader />}>
             <Switch>
 
-              <PublicRoute path="/login" isAuth={AuthState.user} exact>
+              <PublicRoute path="/login" exact isAuth={AuthState.user} >
                 <Login />
               </PublicRoute>
 
-              <PublicRoute path="/register" isAuth={AuthState.user} exact>
+              <PublicRoute path="/register" exact isAuth={AuthState.user} >
                 <Register />
               </PublicRoute>
 
@@ -36,6 +39,21 @@ function App() {
 
               <Route path="/quizzes" exact render={props => {
                 return AuthState.user ? <Quizzes {...props} /> : <Redirector path="/login" isAuth={AuthState.user} />;
+              }} />
+
+              <Route path="/quizzes/quiz" exact
+                render={(props) => {
+                  return AuthState.user ? <Quiz {...props} /> : <Redirector path="/login" isAuth={AuthState.user} />;
+                }} />
+
+              <Route path="/quizzes/quiz-maker" exact
+                render={(props) => {
+                  return AuthState.user ? <QuizMaker {...props} /> : null;
+                }} />
+
+              {/* Catch Stray Routes */}
+              <Route path="/" render={(props) => {
+                return AuthState.user ? <Dashboard {...props} /> : <Redirector path="/login" isAuth={AuthState.user} />;
               }} />
 
             </Switch>

@@ -3,6 +3,7 @@ import AuthContext from '../../context/auth/AuthContextProvider';
 import useFormValidation from '../../hooks/useFormValidation'
 import { firestore } from '../../firebase';
 import { motion } from 'framer-motion';
+import titleCase from '../utils/titleCase';
 
 function AddWord() {
   const { AuthState } = useContext(AuthContext);
@@ -15,15 +16,18 @@ function AddWord() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    // Input(s) are empty
     if (word.word.trim() === '' && word.def.trim() === '') {
       setError(`Seesh, looks like you didn't fill out the whole thing`)
       setTimeout(clearError, 3000);
       return;
     }
 
-    // add word to firestore
+    // Add word to firestore
     try {
-      await firestore.collection('vocabulary').add(word);
+      // Capitalize word
+      const newWord = { ...word, word: titleCase(word.word) }
+      await firestore.collection('vocabulary').add(newWord);
     } catch (error) {
       // TODO: Handle error
       console.log(error);
