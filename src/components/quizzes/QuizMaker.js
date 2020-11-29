@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from 'react'
 import AuthContext from '../../context/auth/AuthContextProvider';
 import VocabContext from '../../context/vocab/VocabContext'
 import { firestore } from '../../firebase';
+import Modal from '../../hoc/Modal';
 import WordSearch from '../dashboard/WordSearch';
 import QuizWord from './QuizWord';
 
@@ -95,7 +96,7 @@ function QuizMaker() {
         </div>
         <button onClick={createQuizHandler} className=" fixed bottom-0 right-0 m-4 font-semibold tracking-wide py-3 px-4 text-white bg-gray-800 rounded-md shadow-md">Create Quiz</button>
       </div>
-    </div>
+    </div >
   )
 }
 
